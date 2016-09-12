@@ -179,6 +179,11 @@ open class SwiftMessages: PresenterDelegate {
     }
     
     /**
+     Not much to say here.
+     */
+    public init() {}
+    
+    /**
      Adds the given configuration and view to the message queue to be displayed.
      
      - Parameter config: The configuration options.
@@ -199,8 +204,8 @@ open class SwiftMessages: PresenterDelegate {
      - Parameter config: The configuration options.
      - Parameter view: The view to be displayed.
      */
-    open func show(view: UIView) {
-        show(config: Config(), view: view)
+    public func show(view: UIView) {
+        show(config: defaultConfig, view: view)
     }
     
     /// A block that returns an arbitrary view.
@@ -234,8 +239,8 @@ open class SwiftMessages: PresenterDelegate {
      
      - Parameter viewProvider: A block that returns the view to be displayed.
      */
-    open func show(viewProvider: @escaping ViewProvider) {
-        show(config: Config(), viewProvider: viewProvider)
+    public func show(viewProvider: @escaping ViewProvider) {
+        show(config: defaultConfig, viewProvider: viewProvider)
     }
     
     /**
@@ -276,6 +281,12 @@ open class SwiftMessages: PresenterDelegate {
         }
     }
     
+    /**
+     Specifies the default configuration to use when calling the variants of
+     `show()` that don't take a `config` argument or as a base for custom configs.
+     */
+    public var defaultConfig = Config()
+
     /**
      Specifies the amount of time to pause between removing a message
      and showing the next. Default is 0.5 seconds.
@@ -511,6 +522,15 @@ extension SwiftMessages {
     
     public static func hide(id: String) {
         globalInstance.hide(id: id)
+    }
+    
+    public static var defaultConfig: Config {
+        get {
+            return globalInstance.defaultConfig
+        }
+        set {
+            globalInstance.defaultConfig = newValue
+        }
     }
     
     public static var pauseBetweenMessages: TimeInterval {

@@ -28,7 +28,7 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = items[(indexPath as NSIndexPath).row]
-        return item.dequeueCell(tableView: tableView)
+        return item.dequeueCell(tableView)
     }
     
     /*
@@ -63,7 +63,9 @@ class ViewController: UITableViewController {
         let warning = MessageView.viewFromNib(layout: .CardView)
         warning.configureTheme(.warning)
         warning.configureDropShadow()
-        warning.configureContent(title: "Warning", body: "Consider yourself warned.", iconText: "🤔")
+        
+        let iconText = ["🤔", "😳", "🙄", "😶"].sm_random()!
+        warning.configureContent(title: "Warning", body: "Consider yourself warned.", iconText: iconText)
         warning.button?.isHidden = true
         var warningConfig = SwiftMessages.Config()
         warningConfig.presentationContext = .window(windowLevel: UIWindowLevelStatusBar)
@@ -148,7 +150,7 @@ enum Item {
     case titleBody(title: String, body: String, function: Function)
     case explore
     
-    func dequeueCell(tableView: UITableView) -> UITableViewCell {
+    func dequeueCell(_ tableView: UITableView) -> UITableViewCell {
         switch self {
         case .titleBody(let data):
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleBody") as! TitleBodyCell
