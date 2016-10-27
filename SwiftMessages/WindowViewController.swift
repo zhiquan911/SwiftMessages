@@ -33,7 +33,8 @@ class WindowViewController: UIViewController
     
     func install() {
         guard let window = window else { return }
-        window.makeKeyAndVisible()
+        //window.makeKeyAndVisible()    //如果使用这个会导致之前的窗口键盘自动回收
+        window.isHidden = false
     }
     
     func uninstall() {
